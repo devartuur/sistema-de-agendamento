@@ -1,6 +1,7 @@
-import { UseCaseError } from '@/core/errors/use-case-error'
+import {UseCaseError} from '../use-case-error'
 
-type ResourceType = 'User' | 'Version' | 'Photo' | 'Prompt' | 'UserPhoto'
+
+type ResourceType = 'Customer' | 'Collaborator' | 'Service' | 'Hour'
 
 export class ResourceNotFoundError extends Error implements UseCaseError {
   constructor(resource?: ResourceType) {
