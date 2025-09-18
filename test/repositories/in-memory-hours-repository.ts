@@ -1,9 +1,10 @@
-import { HoursRepository } from "src/domain/application/repositories/hours-repository";
-import { Hour } from "src/domain/enterprise/entities/hours";
-import { InMemoryBookedSchedullingRepository } from "./in-memory-booked-schedulling";
+import { HoursRepository } from "src/domain/application/repositories/hours-repository"
+import { Hour } from "src/domain/enterprise/entities/hours"
+import { SchedullingsRepository } from "src/domain/application/repositories/schedullings-repository"
 
 export class InMemoryHoursRepository implements HoursRepository {
-  constructor(private bookedScheddulingRepository: InMemoryBookedSchedullingRepository) {}
+  constructor(private schedullingsRepository: SchedullingsRepository) {}
+
   public items: Hour[] = []
 
   async create(hour: Hour): Promise<void> {
@@ -15,16 +16,18 @@ export class InMemoryHoursRepository implements HoursRepository {
     return hour ?? null
   }
 
-  async findFreByDateAndCollaboratorId(date: Date, collaboratorId: string): Promise<Hour[]> {
-    const bookedScheddulingHours = this.bookedScheddulingRepository.items.filter((item) => item.date === date 
-      && item.collaboratorId.toString() === collaboratorId)
-    
-    const hoursFre = this.items.filter((hour) => 
-      bookedScheddulingHours.some((booked) => hour.id.toString() !== booked.hourId.toString()))
-    
-    const hourFreOrdened = hoursFre.
-      sort((a,b) => (a.hour.getHours() * 60 + a.hour.getMinutes()) - (b.hour.getHours() * 60 + b.hour.getMinutes()))
+  async findFreeByDateAndCollaboratorId(date: Date, collaboratorId: string): Promise<Hour[]> {
+    // buscar agendamentos desse colaborador na data
+    const bookedSchedullings = await this.schedullingsRepository.findByDateAndCollaboratorId(
+      date,
+      collaboratorId,
+    )
 
-    return hourFreOrdened
+    // pegar as horas livres (não presentes nos agendamentos)
+    const freeHours = this.items.filter(
+      (hour) => !bookedSchedullings.some((sched) => sched.hoursIds.includes(hour.id)),
+    )
+
+    return freeHours.sort((a, b) => a.hour - b.hour)
   }
 }

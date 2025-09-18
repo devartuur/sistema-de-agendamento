@@ -6,7 +6,7 @@ export interface SchedullingProps {
   customerId: UniqueEntityID
   collaboratorId: UniqueEntityID
   hoursIds: UniqueEntityID[]
-  schedullingDate: Date
+  date: Date
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -28,8 +28,8 @@ export class Schedulling extends Entity<SchedullingProps> {
     return this.props.hoursIds
   }
 
-  get schedullingDate() {
-    return this.props.schedullingDate
+  get date() {
+    return this.props.date
   }
 
   get createdAt() {

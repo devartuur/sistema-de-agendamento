@@ -1,7 +1,7 @@
 import {UseCaseError} from '../use-case-error'
 
 
-type ResourceType = 'Customer' | 'Collaborator' | 'Service' | 'Hour'
+type ResourceType = 'Customer' | 'Collaborator' | 'Service' | 'Hour' | 'Schedulling'
 
 export class ResourceNotFoundError extends Error implements UseCaseError {
   constructor(resource?: ResourceType) {

@@ -5,7 +5,7 @@ import { Optional } from "src/core/types/optional";
 export class CollaboratorProps {
   name: string
   description: string
-  serviceId: string
+  serviceIds: UniqueEntityID[]
   createdAt: Date
   updatedAt?: Date | null  
 }
@@ -24,7 +24,7 @@ export class Collaborator extends Entity<CollaboratorProps> {
   }
 
   get serviceId() {
-    return this.props.serviceId
+    return this.props.serviceIds
   }
 
   get createdAt() {
@@ -35,12 +35,12 @@ export class Collaborator extends Entity<CollaboratorProps> {
     return this.props.updatedAt
   }
 
-  static create(props: Optional<CollaboratorProps, "createdAt" | "updatedAt">) {
+  static create(props: Optional<CollaboratorProps, "createdAt" | "updatedAt">, id?: UniqueEntityID) {
     const collaborator = new Collaborator({
       ...props,
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? null
-    }) 
+    }, id) 
 
     return collaborator
   }

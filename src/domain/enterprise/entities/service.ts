@@ -2,15 +2,8 @@ import { Entity } from "src/core/entities/entitiy"
 import { UniqueEntityID } from "src/core/entities/unique-entity-id"
 import { Optional } from "src/core/types/optional"
 
-export enum Category {
-  hair,
-  eyebrow,
-  beard,
-}
-
 export interface ServiceProps {
   name: string
-  category: Category
   description: string
   duration: number
   price: number
@@ -25,10 +18,6 @@ export class Service extends Entity<ServiceProps> {
 
   get name() {
     return this.props.name
-  }
-
-  get category() {
-    return this.props.category
   }
 
   get description() {

@@ -3,7 +3,7 @@ import { UniqueEntityID } from "src/core/entities/unique-entity-id"
 import { Optional } from "src/core/types/optional"
 
 export interface HoursProps {
-  hour: Date
+  hour: number
   day: number[]
   createdAt: Date
   updatedAt?: Date | null

@@ -1,7 +1,7 @@
-import { collaboratorsRepository } from "src/domain/application/repositories/collaborators-repository";
+import { CollaboratorsRepository } from "src/domain/application/repositories/collaborators-repository";
 import { Collaborator } from "src/domain/enterprise/entities/collaborator";
 
-export class InMemoryCollaboratorsRepository implements collaboratorsRepository {
+export class InMemoryCollaboratorsRepository implements CollaboratorsRepository {
   public items: Collaborator[] = []
 
   async create(collaborator: Collaborator): Promise<void> {
