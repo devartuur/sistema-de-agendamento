@@ -7,8 +7,8 @@ import { Schedulling } from "src/domain/enterprise/entities/schedulling";
 import { HoursRepository } from "../../../repositories/hours-repository";
 import { ServicesRepository } from "../../../repositories/service-repository";
 import { Hour } from "src/domain/enterprise/entities/hours";
-import { HourIsNotAvailableError } from "../../errors/hour-not-is-not-available.error";
-import { HourMustBeInSequenceError } from "../../errors/hours-must-be-in-sequence.error";
+import { HourIsNotAvailableError } from "../../@errors/hour-not-is-not-available.error";
+import { HourMustBeInSequenceError } from "../../@errors/hours-must-be-in-sequence.error";
 import { Either, left, right } from "src/core/utils/either";
 
 export interface CreateSchedullingUseCaseRequest {

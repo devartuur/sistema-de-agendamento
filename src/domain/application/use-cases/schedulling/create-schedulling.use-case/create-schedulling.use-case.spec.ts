@@ -15,8 +15,8 @@ import { makeCollaborator } from "test/factories/make-collaborator"
 import { makeService } from "test/factories/make-service"
 import { ResourceNotFoundError } from "src/core/errors/errors/resource-not-found.error"
 import { makeSchedulling } from "test/factories/make-schedulling"
-import { HourIsNotAvailableError } from "../../errors/hour-not-is-not-available.error"
-import { HourMustBeInSequenceError } from "../../errors/hours-must-be-in-sequence.error"
+import { HourIsNotAvailableError } from "../../@errors/hour-not-is-not-available.error"
+import { HourMustBeInSequenceError } from "../../@errors/hours-must-be-in-sequence.error"
 
 let sut: CreateSchedullingUseCase
 let customersRepository: CustomersRepository
