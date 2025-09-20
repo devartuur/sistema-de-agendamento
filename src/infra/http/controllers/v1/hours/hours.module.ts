@@ -6,9 +6,10 @@ import { FetchFreeHoursUseCase } from 'src/domain/application/use-cases/hour/fet
 import { CreateHourController } from './create-hour/create-hour.controller'
 import { FetchHourController } from './fetch-hour/fetch-hour.controller'
 import { FetchFreeHoursController } from './fetch-free-hours/fetch-free-hours.controller'
+import { DatabaseModule } from 'src/infra/database/database.module'
 
 @Module({
-  imports: [],
+  imports: [DatabaseModule],
   controllers: [CreateHourController, FetchHourController, FetchFreeHoursController],
   providers: [CreateHourUseCase, FetchHourUseCase, FetchFreeHoursUseCase],
 })

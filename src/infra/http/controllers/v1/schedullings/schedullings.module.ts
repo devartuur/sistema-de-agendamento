@@ -4,9 +4,10 @@ import { CreateSchedullingUseCase } from 'src/domain/application/use-cases/sched
 import { FetchSchedullingUseCase } from 'src/domain/application/use-cases/schedulling/fetch-schedulling/fetch-schedulling.use-case'
 import { CreateSchedullingController } from './create-schedulling/create-schedulling.controller'
 import { FetchSchedullingController } from './fetch-schedulling/fetch-schedulling.controller'
+import { DatabaseModule } from 'src/infra/database/database.module'
 
 @Module({
-  imports: [],
+  imports: [DatabaseModule],
   controllers: [CreateSchedullingController, FetchSchedullingController],
   providers: [CreateSchedullingUseCase, FetchSchedullingUseCase],
 })

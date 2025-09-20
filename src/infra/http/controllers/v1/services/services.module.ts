@@ -4,9 +4,10 @@ import { CreateServiceUseCase } from 'src/domain/application/use-cases/service/c
 import { FetchServiceUseCase } from 'src/domain/application/use-cases/service/fetch-service.use-case/fetch-service.use-case'
 import { CreateServiceController } from './create-service/create-service.controller'
 import { FetchServiceController } from './fetch-service/fetch-service.controller'
+import { DatabaseModule } from 'src/infra/database/database.module'
 
 @Module({
-  imports: [],
+  imports: [DatabaseModule],
   controllers: [CreateServiceController, FetchServiceController],
   providers: [CreateServiceUseCase, FetchServiceUseCase],
 })

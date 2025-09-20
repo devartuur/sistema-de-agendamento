@@ -1,6 +1,6 @@
+import { faker } from "@faker-js/faker";
 import { UniqueEntityID } from "src/core/entities/unique-entity-id";
 import { Customer, CustomerProps } from "src/domain/enterprise/entities/customer";
-import {faker} from '@faker-js/faker'
 
 export function makeCustomer(override?: Partial<CustomerProps>, id?: UniqueEntityID) {
   return Customer.create({
