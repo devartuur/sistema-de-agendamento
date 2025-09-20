@@ -10,9 +10,7 @@ export interface CreateHourUseCaseRequest {
 
 export type CreateHourUseCaseResponse = Either<
   null,
-  {
-    hour: Hour
-  }
+  {}
 >
 
 @Injectable()
@@ -27,6 +25,6 @@ export class CreateHourUseCase {
 
     await this.hoursRepository.create(hourEntity)
 
-    return right({ hour: hourEntity })
+    return right({})
   }
 }

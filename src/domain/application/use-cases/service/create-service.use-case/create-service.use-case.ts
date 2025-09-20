@@ -12,9 +12,7 @@ export interface CreateServiceUseCaseRequest {
 
 export type CreateServiceUseCaseResponse = Either<
   null,
-  {
-    service: Service
-  }
+  {}
 >
 
 @Injectable()
@@ -31,6 +29,6 @@ export class CreateServiceUseCase {
 
     await this.servicesRepository.create(service)
 
-    return right({ service })
+    return right({})
   }
 }

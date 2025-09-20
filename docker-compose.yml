@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+  db: 
+  image: postgres:15-alpine
+  container_name: pg_sistema_agendamento
+  enviroment:
+    POSTGRES_USER: user
+    POSTGRES_PASSWORD: pass
+    POSTGRES_DB: db_sistema_agendamento
+  ports: 
+    - 5432:5432
+  volumes: 
+    - pgdata:/var/lib/postgresql/data
+
+
+  
+volumes:
+  pgdata
