@@ -1,13 +1,19 @@
 import { BadRequestException, Body, Controller, HttpCode, HttpStatus, Patch, Req } from '@nestjs/common'
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { EditProfileUseCase } from 'src/domain/application/use-cases/customer/edit-profile.use-case/edit-profile.use-case'
+import { createZodDto } from 'nestjs-zod'
+import z from 'zod'
 
-class EditProfileBodyDTO {
-  name?: string
-  email?: string
-  password?: string
-  birthDateAt?: Date
-}
+export const editProfileSchema = z.object({
+  name: z.string().optional(),
+  email: z.string().optional(),
+  password: z.string().optional(),
+  birthDateAt: z.coerce.date().optional(),
+})
+
+export type EditProfileType = z.infer<typeof editProfileSchema>
+
+class EditProfileDto extends createZodDto(editProfileSchema) {}
 
 @ApiTags('Customers')
 @Controller('/api/v1/customers')
@@ -19,7 +25,8 @@ export class EditProfileController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Edit customer profile (authenticated)' })
   @ApiResponse({ status: 204, description: 'Profile updated' })
-  async handle(@Body() body: EditProfileBodyDTO, @Req() req: any) {
+  @ApiBody({ type: EditProfileDto })
+  async handle(@Body() body: EditProfileType, @Req() req: any) {
     const customerId: string = req.user.sub
 
     const result = await this.editProfile.execute({ customerId, ...body })
@@ -30,3 +37,4 @@ export class EditProfileController {
     }
   }
 }
+

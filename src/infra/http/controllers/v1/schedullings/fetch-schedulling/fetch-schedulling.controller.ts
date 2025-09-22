@@ -3,6 +3,16 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { FetchSchedullingUseCase } from 'src/domain/application/use-cases/schedulling/fetch-schedulling/fetch-schedulling.use-case'
 import { ResourceNotFoundError } from 'src/core/errors/errors/resource-not-found.error'
 import { SchedullingPresenter } from '../../../presenters/schedulling/schedulling.presenter'
+import { createZodDto } from 'nestjs-zod'
+import z from 'zod'
+
+export const fetchSchedullingParamsSchema = z.object({
+  id: z.string(),
+})
+
+export type FetchSchedullingParamsType = z.infer<typeof fetchSchedullingParamsSchema>
+
+class FetchSchedullingParamsDto extends createZodDto(fetchSchedullingParamsSchema) {}
 
 @ApiTags('Schedullings')
 @Controller('/api/v1/schedullings/:id')
@@ -12,8 +22,8 @@ export class FetchSchedullingController {
   @Get()
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Fetch schedulling by id' })
-  async handle(@Param('id') id: string) {
-    const result = await this.fetchSchedulling.execute({ schedullingId: id })
+  async handle(@Param() params: FetchSchedullingParamsType) {
+    const result = await this.fetchSchedulling.execute({ schedullingId: params.id })
 
     if (result.isLeft()) {
       const error = result.value
@@ -28,3 +38,4 @@ export class FetchSchedullingController {
     return SchedullingPresenter.toHttp(result.value.schedulling)
   }
 }
+

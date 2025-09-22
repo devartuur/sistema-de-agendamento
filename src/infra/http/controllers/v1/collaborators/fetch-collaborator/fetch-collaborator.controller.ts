@@ -3,6 +3,16 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { FetchCollaboratorUseCase } from 'src/domain/application/use-cases/collaborator/fetch-collaborator.use-case/fetch-collaborator.use-case'
 import { ResourceNotFoundError } from 'src/core/errors/errors/resource-not-found.error'
 import { CollaboratorPresenter } from '../../../presenters/collaborator/collaborator.presenter'
+import { createZodDto } from 'nestjs-zod'
+import z from 'zod'
+
+export const fetchCollaboratorParamsSchema = z.object({
+  id: z.string(),
+})
+
+export type FetchCollaboratorParamsType = z.infer<typeof fetchCollaboratorParamsSchema>
+
+class FetchCollaboratorParamsDto extends createZodDto(fetchCollaboratorParamsSchema) {}
 
 @ApiTags('Collaborators')
 @Controller('/api/v1/collaborators/:id')
@@ -12,8 +22,8 @@ export class FetchCollaboratorController {
   @Get()
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Fetch collaborator by id' })
-  async handle(@Param('id') id: string) {
-    const result = await this.fetchCollaborator.execute({ collaboratorId: id })
+  async handle(@Param() params: FetchCollaboratorParamsType) {
+    const result = await this.fetchCollaborator.execute({ collaboratorId: params.id })
 
     if (result.isLeft()) {
       const error = result.value
@@ -28,3 +38,4 @@ export class FetchCollaboratorController {
     return CollaboratorPresenter.toHttp(result.value.collaborator)
   }
 }
+

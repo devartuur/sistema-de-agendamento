@@ -3,6 +3,16 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { FetchHourUseCase } from 'src/domain/application/use-cases/hour/fetch-hour.use-case/fetch-hour.use-case'
 import { ResourceNotFoundError } from 'src/core/errors/errors/resource-not-found.error'
 import { HourPresenter } from '../../../presenters/hour/hour.presenter'
+import { createZodDto } from 'nestjs-zod'
+import z from 'zod'
+
+export const fetchHourParamsSchema = z.object({
+  id: z.string(),
+})
+
+export type FetchHourParamsType = z.infer<typeof fetchHourParamsSchema>
+
+class FetchHourParamsDto extends createZodDto(fetchHourParamsSchema) {}
 
 @ApiTags('Hours')
 @Controller('/api/v1/hours/:id')
@@ -12,8 +22,8 @@ export class FetchHourController {
   @Get()
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Fetch hour by id' })
-  async handle(@Param('id') id: string) {
-    const result = await this.fetchHour.execute({ hourId: id })
+  async handle(@Param() params: FetchHourParamsType) {
+    const result = await this.fetchHour.execute({ hourId: params.id })
 
     if (result.isLeft()) {
       const error = result.value
@@ -28,3 +38,4 @@ export class FetchHourController {
     return HourPresenter.toHttp(result.value.hour)
   }
 }
+
