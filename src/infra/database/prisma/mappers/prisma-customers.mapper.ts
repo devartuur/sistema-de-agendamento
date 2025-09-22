@@ -7,7 +7,7 @@ export class PrismaCustomersMapper {
     return Customer.create({
       name: customer.name,
       email: customer.email,
-      password: customer.email,
+      password: customer.password,
       birthDateAt: customer.birth_date_at,
       createdAt: customer.created_at,
       updatedAt: customer.updated_at

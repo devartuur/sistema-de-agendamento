@@ -1,10 +1,11 @@
-import { BadRequestException, Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
+import { BadRequestException, Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { CreateSchedullingUseCase } from 'src/domain/application/use-cases/schedulling/create-schedulling.use-case/create-schedulling.use-case'
 import { ResourceNotFoundError } from 'src/core/errors/errors/resource-not-found.error'
 import { HourIsNotAvailableError } from 'src/domain/application/use-cases/@errors/hour-not-is-not-available.error'
 import { HourMustBeInSequenceError } from 'src/domain/application/use-cases/@errors/hours-must-be-in-sequence.error'
 import { SchedullingPresenter } from '../../../presenters/schedulling/schedulling.presenter'
+import { AuthGuard } from '@nestjs/passport'
 
 class CreateSchedullingBodyDTO {
   customerId: string

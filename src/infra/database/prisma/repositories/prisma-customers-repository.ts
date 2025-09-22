@@ -30,4 +30,17 @@ export class PrismaCustomersRepository implements CustomersRepository {
 
   }
 
+  async update(customer: Customer): Promise<void> {
+    await this.prisma.customer.update({
+      where: { id: customer.id.toString() },
+      data: {
+        name: customer.name,
+        email: customer.email,
+        password: customer.password,
+        birth_date_at: customer.birthDateAt,
+        updated_at: customer.updatedAt
+      }
+    })
+  }
+
 }

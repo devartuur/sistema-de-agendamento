@@ -4,6 +4,7 @@ import { HoursModule } from "./controllers/v1/hours/hours.module";
 import { ServicesModule } from "./controllers/v1/services/services.module";
 import { SchedullingsModule } from "./controllers/v1/schedullings/schedullings.module";
 import { DatabaseModule } from "../database/database.module";
+import { CustomersModule } from "./controllers/v1/customers/customers.module";
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { DatabaseModule } from "../database/database.module";
     HoursModule,
     ServicesModule,
     SchedullingsModule,
+    CustomersModule,
   ],
 })
 export class HttpModule {}
