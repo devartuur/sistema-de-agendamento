@@ -8,11 +8,71 @@ datasource db {
 }
 
 model Customer {
-  id            String    @id(map: "customer_pkey") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name          String    @db.VarChar(50)
-  email         String    @db.VarChar(50)
-  password      String    @db.VarChar(8)
-  birth_date_at DateTime  @db.Timestamptz(6)
-  created_at    DateTime  @default(now()) @db.Timestamptz(6)
-  updated_at    DateTime? @default(now()) @db.Timestamptz(6)
+  id            String        @id(map: "customer_pkey") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name          String        @db.VarChar(50)
+  email         String        @db.VarChar(50)
+  password      String        @db.VarChar(8)
+  birth_date_at DateTime      @db.Timestamptz(6)
+  created_at    DateTime      @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime?     @default(now()) @db.Timestamptz(6)
+  Schedulling   Schedulling[]
+}
+
+model Collaborator {
+  id                    String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name                  String                  @db.VarChar(50)
+  description           String                  @db.VarChar(100)
+  created_at            DateTime                @default(now()) @db.Timestamptz(6)
+  updated_at            DateTime?               @db.Timestamptz(6)
+  Collaborators_Service Collaborators_Service[]
+  Schedulling           Schedulling[]
+}
+
+model Collaborators_Service {
+  id              String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  collaborator_id String       @db.Uuid
+  service_id      String       @db.Uuid
+  created_at      DateTime     @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime?    @db.Timestamptz(6)
+  Collaborator    Collaborator @relation(fields: [collaborator_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  Service         Service      @relation(fields: [service_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([collaborator_id, service_id])
+}
+
+model Service {
+  id                    String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name                  String                  @db.VarChar(50)
+  description           String                  @db.VarChar(100)
+  duration              Int                     @db.SmallInt
+  price                 BigInt
+  created_at            DateTime                @default(now()) @db.Timestamptz(6)
+  updated_at            DateTime?               @db.Timestamptz(6)
+  Collaborators_Service Collaborators_Service[]
+  Schedulling           Schedulling[]
+}
+
+model Hour {
+  id          String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  hour        Int           @db.SmallInt
+  day         Int[]         @db.SmallInt
+  created_at  DateTime      @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime?     @db.Timestamptz(6)
+  Schedulling Schedulling[]
+}
+
+model Schedulling {
+  id              String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  service_id      String       @db.Uuid
+  hour_id         String       @db.Uuid
+  collaborator_id String       @db.Uuid
+  customer_id     String       @db.Uuid
+  created_at      DateTime     @db.Timestamptz(6)
+  updated_at      DateTime?    @db.Timestamptz(6)
+  Collaborator    Collaborator @relation(fields: [collaborator_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  Customer        Customer     @relation(fields: [customer_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  Hour            Hour         @relation(fields: [hour_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  Service         Service      @relation(fields: [service_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([service_id, customer_id, hour_id, collaborator_id])
 }
