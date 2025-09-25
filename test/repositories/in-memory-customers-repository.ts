@@ -13,4 +13,13 @@ export class InMemoryCustomersRepository implements CustomersRepository {
     const customer = this.items.find((item) => item.id.toString() === id)
     return customer ?? null
   }
+
+  async update(customer: Customer): Promise<void> {
+    const index = this.items.findIndex((item) => item.id.toString() === customer.id.toString())
+    if (index >= 0) {
+      this.items[index] = customer
+    } else {
+      this.items.push(customer)
+    }
+  }
 }

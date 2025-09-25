@@ -10,6 +10,8 @@ import { PrismaSchedullingsRepository } from "./prisma/repositories/prisma-sched
 import { PrismaHoursRepository } from "./prisma/repositories/prisma-hours-repository";
 import { ServicesRepository } from "src/domain/application/repositories/service-repository";
 import { PrismaServiceRepository } from "./prisma/repositories/prisma-services-repository";
+import { CustomerPhotosRepository } from "src/domain/application/repositories/user-photos-repository";
+import { PrismaCustomerPhotosRepository } from "./prisma/repositories/prisma-user-photos.repository";
 
 @Module({
   providers: [PrismaService, 
@@ -17,14 +19,16 @@ import { PrismaServiceRepository } from "./prisma/repositories/prisma-services-r
     {provide: CollaboratorsRepository, useClass: PrismaCollaboratorsRepository},
     {provide: SchedullingsRepository, useClass: PrismaSchedullingsRepository},
     {provide: HoursRepository, useClass: PrismaHoursRepository},
-    {provide: ServicesRepository, useClass: PrismaServiceRepository}
+    {provide: ServicesRepository, useClass: PrismaServiceRepository},
+    {provide: CustomerPhotosRepository, useClass: PrismaCustomerPhotosRepository}
   ],
   exports: [PrismaService, 
     CustomersRepository,
     CollaboratorsRepository,
     HoursRepository,
     SchedullingsRepository,
-    ServicesRepository
+    ServicesRepository,
+    CustomerPhotosRepository
   ]
 })
 export class DatabaseModule {}

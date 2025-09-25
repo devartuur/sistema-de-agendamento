@@ -3,7 +3,7 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { createZodDto } from 'nestjs-zod'
 import { CreateCustomerUseCase } from 'src/domain/application/use-cases/customer/create-customer.use-case/create-customer.use-case'
 import { Public } from 'src/infra/auth/public'
-import z from 'zod'
+import { z } from 'zod'
 
 export const createCustomerSchema = z.object({
   name: z.string(),
@@ -15,7 +15,6 @@ export const createCustomerSchema = z.object({
 export type CreateCustomerType = z.infer<typeof createCustomerSchema>
 
 class CreateCustomerDto extends createZodDto(createCustomerSchema) {}
-
 
 @ApiTags('Customers')
 @Controller('/api/v1/customers')

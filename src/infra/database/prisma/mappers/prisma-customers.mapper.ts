@@ -8,9 +8,8 @@ export class PrismaCustomersMapper {
       name: customer.name,
       email: customer.email,
       password: customer.password,
-      birthDateAt: customer.birth_date_at,
-      createdAt: customer.created_at,
-      updatedAt: customer.updated_at
+      birthDateAt: customer.birthDate,
+      createdAt: customer.createdAt,
     }, new UniqueEntityID(customer.id)) 
   }
 
@@ -20,9 +19,9 @@ export class PrismaCustomersMapper {
       email: customer.email,
       name: customer.name,
       password: customer.password,
-      birth_date_at: customer.birthDateAt,
-      created_at: customer.createdAt,
-      updated_at: customer.updatedAt
+      birthDate: customer.birthDateAt,
+      createdAt: customer.createdAt,
+      updatedAt: customer.updatedAt
     }
   }
 }

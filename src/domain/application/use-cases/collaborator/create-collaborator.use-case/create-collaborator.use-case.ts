@@ -12,7 +12,9 @@ export interface CreateCollaboratorUseCaseRequest {
 
 export type CreateCollaboratorUseCaseResponse = Either<
   null,
-  {}
+  {
+    collaborator: Collaborator
+  }
 >
 
 @Injectable()
@@ -28,6 +30,8 @@ export class CreateCollaboratorUseCase {
 
     await this.collaboratorsRepository.create(collaborator)
 
-    return right({})
+    return right({
+      collaborator
+    })
   }
 }

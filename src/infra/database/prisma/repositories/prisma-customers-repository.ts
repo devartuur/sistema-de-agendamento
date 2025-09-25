@@ -37,8 +37,8 @@ export class PrismaCustomersRepository implements CustomersRepository {
         name: customer.name,
         email: customer.email,
         password: customer.password,
-        birth_date_at: customer.birthDateAt,
-        updated_at: customer.updatedAt
+        birthDate: customer.birthDateAt,
+        updatedAt: customer.updatedAt
       }
     })
   }
