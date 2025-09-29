@@ -48,7 +48,7 @@ describe("[Create Schedulling]", () => {
     const customer = makeCustomer()
     await customersRepository.create(customer)
 
-    const hour1 = makeHour({day: [1, 2, 3, 4, 5, 6, 7], hour: 480})
+    const hour1 = makeHour({days: [1, 2, 3, 4, 5, 6, 7], hour: 480})
     await hoursRepository.create(hour1)
 
     const service = makeService({duration: 20, })
@@ -72,8 +72,8 @@ describe("[Create Schedulling]", () => {
     const customer = makeCustomer()
     await customersRepository.create(customer)
 
-    // const hour1 = makeHour({day: [1, 2, 3, 4, 5, 6, 7], hour: 480})
-    // await hoursRepository.create(hour1)
+    const hour1 = makeHour({days: [1, 2, 3, 4, 5, 6, 7], hour: 480})
+    await hoursRepository.create(hour1)
 
     const service = makeService({duration: 20, })
     await servicesRepository.create(service)
@@ -98,8 +98,8 @@ describe("[Create Schedulling]", () => {
     const customer = makeCustomer()
     await customersRepository.create(customer)
 
-    const hour1 = makeHour({day: [1, 2, 3, 4, 5, 6, 7], hour: 480})
-    const hour2 = makeHour({day: [1, 2, 3, 4, 5, 6, 7], hour: 500})
+    const hour1 = makeHour({days: [1, 2, 3, 4, 5, 6, 7], hour: 480})
+    const hour2 = makeHour({days: [1, 2, 3, 4, 5, 6, 7], hour: 500})
     await hoursRepository.create(hour1)
     await hoursRepository.create(hour2)
 
@@ -136,7 +136,7 @@ describe("[Create Schedulling]", () => {
     const customer = makeCustomer()
     await customersRepository.create(customer)
 
-    const hour1 = makeHour({ day: [1, 2, 3, 4, 5, 6, 7], hour: 480 })
+    const hour1 = makeHour({ days: [1, 2, 3, 4, 5, 6, 7], hour: 480 })
     await hoursRepository.create(hour1)
 
     const service = makeService({ duration: 20 })
@@ -155,7 +155,7 @@ describe("[Create Schedulling]", () => {
   })
 
   it("should not be possible to create a schedule with a non-existing customer", async () => {
-    const hour1 = makeHour({ day: [1, 2, 3, 4, 5, 6, 7], hour: 480 })
+    const hour1 = makeHour({ days: [1, 2, 3, 4, 5, 6, 7], hour: 480 })
     await hoursRepository.create(hour1)
 
     const service = makeService({ duration: 20 })
@@ -181,7 +181,7 @@ describe("[Create Schedulling]", () => {
     const customer = makeCustomer()
     await customersRepository.create(customer)
 
-    const hour1 = makeHour({ day: [1, 2, 3, 4, 5, 6, 7], hour: 480 })
+    const hour1 = makeHour({ days: [1, 2, 3, 4, 5, 6, 7], hour: 480 })
     await hoursRepository.create(hour1)
 
     const collaborator = makeCollaborator({ serviceIds: [] })
@@ -204,8 +204,8 @@ describe("[Create Schedulling]", () => {
     const customer = makeCustomer()
     await customersRepository.create(customer)
 
-    const hour1 = makeHour({ day: [1,2,3,4,5,6,7], hour: 480 }) // 8:00
-    const hour2 = makeHour({ day: [1,2,3,4,5,6,7], hour: 520 }) // 8:40, not consecutive
+    const hour1 = makeHour({ days: [1,2,3,4,5,6,7], hour: 480 }) // 8:00
+    const hour2 = makeHour({ days: [1,2,3,4,5,6,7], hour: 520 }) // 8:40, not consecutive
     await hoursRepository.create(hour1)
     await hoursRepository.create(hour2)
 

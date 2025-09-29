@@ -6,7 +6,8 @@ import z from "zod";
 import { Injectable } from "@nestjs/common";
 
 const tokenSchema = z.object({
-  sub: z.string().uuid()
+  sub: z.string().uuid(),
+  role: z.enum(['admin','user']).optional(),
 })
 
 export type TokenSchema = z.infer<typeof tokenSchema>
@@ -18,11 +19,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: secret,
-      algorithms: ['HS256']
+      algorithms: ['HS256'],
     })
   }
   
-  validate(payload: TokenSchema): unknown {
+  validate(payload: TokenSchema): TokenSchema {
     return tokenSchema.parse(payload)
   }
 

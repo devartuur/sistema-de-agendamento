@@ -9,6 +9,7 @@ import { ServicesRepository } from "../../../repositories/service-repository";
 import { Hour } from "src/domain/enterprise/entities/hours";
 import { HourIsNotAvailableError } from "../../@errors/hour-not-is-not-available.error";
 import { HourMustBeInSequenceError } from "../../@errors/hours-must-be-in-sequence.error";
+import { HourNotAvailableOnDayError } from "../../@errors/hour-not-available-on-day.error";
 import { Either, left, right } from "src/core/utils/either";
 
 export interface CreateSchedullingUseCaseRequest {
@@ -22,7 +23,8 @@ export interface CreateSchedullingUseCaseRequest {
 export type CreateSchedullingUseCaseResponse = Either<
   ResourceNotFoundError | 
   HourIsNotAvailableError | 
-  HourMustBeInSequenceError, 
+  HourMustBeInSequenceError |
+  HourNotAvailableOnDayError, 
   {
     schedulling: Schedulling
   }
@@ -57,6 +59,10 @@ export class CreateSchedullingUseCase {
       const hour = await this.hoursRepository.findById(hourId)
       if(!hour) return left(new ResourceNotFoundError('Hour'))
 
+      
+      const dayOfSchedulling = date.getDay()
+      if(!hour.days.includes(dayOfSchedulling)) return left(new HourNotAvailableOnDayError())
+
 
       const availableHoursSlots = 
         await this.hoursRepository.findFreeByDateAndCollaboratorId(date, collaboratorId)
@@ -74,7 +80,7 @@ export class CreateSchedullingUseCase {
 
       const hoursRequired: Hour[] = []
 
-      // pega as horas com base no nuemero de spaços de horas que é preciso
+      
       for(let i = 0; i < numberHourServiceNecessary; i++) {
         hoursRequired.push(availableHoursSlotsFirtsCorrespondence[i])
       }
@@ -100,7 +106,6 @@ export class CreateSchedullingUseCase {
       return right({
         schedulling
       })
-      
   }
 }
 

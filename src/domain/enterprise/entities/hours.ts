@@ -4,7 +4,7 @@ import { Optional } from "src/core/types/optional"
 
 export interface HoursProps {
   hour: number
-  day: number[]
+  days: number[]
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -20,6 +20,10 @@ export class Hour extends Entity<HoursProps> {
 
   get createdAt() {
     return this.props.createdAt
+  }
+
+  get days() {
+    return this.props.days
   }
 
   get updatedAt() {
